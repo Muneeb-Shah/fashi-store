@@ -11,7 +11,7 @@ import Banner from "./Components/Banner";
 function App() {
   return (
     <Fragment>
-      <div className="container">
+      <div>
         <ProductsContextProvider>
           <Products />
         </ProductsContextProvider>
