@@ -540,6 +540,12 @@ p {
   font-weight: 500;
 }
 
+.no-products {
+  text-align: center;
+  font-size: 4rem;
+  margin-top: 20rem;
+}
+
 @media screen and (max-width: 1750px) {
   .item-card {
     width: 250px;
@@ -712,6 +718,13 @@ p {
 
 .header__top__social__login {
   color: var(--color-body);
+  display: flex;
+  align-items: center;
+}
+
+.social__login__text,
+.social__lang__text {
+  margin-left: 0.5rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -1605,4 +1618,93 @@ p {
 
 .hidden {
   display: none;
+}
+
+/* FORMS */
+form {
+  margin: 5% auto 0 auto;
+  padding: 30px;
+  width: 400px;
+  height: auto;
+  overflow: hidden;
+  background: white;
+  border-radius: 10px;
+}
+
+form label {
+  font-size: 14px;
+  color: darkgray;
+  cursor: pointer;
+}
+
+form label,
+form input {
+  float: left;
+  clear: both;
+}
+
+form input {
+  margin: 15px 0;
+  padding: 15px 10px;
+  width: 100%;
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -ms-transition: 0.2s ease all;
+  -o-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+  border-color: cornflowerblue;
+}
+
+input[type="submit"] {
+  padding: 15px 50px;
+  width: auto;
+  background: #1abc9c;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  transition: 0.2s ease all;
+}
+
+input[type="submit"]:hover {
+  opacity: 0.8;
+}
+
+input[type="submit"]:active {
+  opacity: 0.4;
+}
+
+.form__heading {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+.login-form__link {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+.login-form__link a {
+  color: var(--color-primary);
+}
+
+.error-message {
+  background-color: #ff9f9f;
+  color: #a50606;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  font-weight: normal;
+  padding: 2rem;
+  opacity: 0.9;
 }

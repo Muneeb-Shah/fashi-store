@@ -1,103 +1,132 @@
-const Header = () => {
+import React from "react";
+import { FaUser, FaLanguage, FaPowerOff } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+const Header = ({ currentUser }) => {
   return (
     <header id="header">
-      <section class="header__top">
-        <div class="container">
-          <div class="header__top__contact">
-            <div class="header__top__contact__email">
-              <i class="fa fa-envelope"></i>
+      <section className="header__top">
+        <div className="container">
+          <div className="header__top__contact">
+            <div className="header__top__contact__email">
+              <i className="fa fa-envelope"></i>
               <span>hello.colorlib@gmail.com</span>
             </div>
-            <div class="header__top__contact__phone">
-              <i class="fa fa-phone"></i>
+            <div className="header__top__contact__phone">
+              <i className="fa fa-phone"></i>
               <span>+65 11 188 8888</span>
             </div>
           </div>
-          <div class="header__top__social">
-            <ul class="header__top__social__social-icons">
+          <div className="header__top__social">
+            <ul className="header__top__social__social-icons">
               <li>
-                <i class="fa fa-faucet"></i>
+                <i className="fa fa-faucet"></i>
               </li>
               <li>
-                <i class="fa fa-battery-full"></i>
+                <i className="fa fa-battery-full"></i>
               </li>
               <li>
-                <i class="fa fa-envelope"></i>
+                <i className="fa fa-envelope"></i>
               </li>
               <li>
-                <i class="fa fa-fan"></i>
+                <i className="fa fa-fan"></i>
               </li>
             </ul>
-            <div class="header__top__social__lang">
-              <i class="fa fa-language"></i>
-              <select name="language">
+            <div className="header__top__social__lang">
+              <FaLanguage />
+              <select className="social__lang__text" name="language">
                 <option value="english">English</option>
                 <option value="german">German</option>
               </select>
             </div>
-            <a class="header__top__social__login" href="">
-              <i class="fa fa-user"></i>
-              <span>login</span>
-            </a>
+            {!currentUser && (
+              <>
+                {" "}
+                <Link className="header__top__social__login" to="/login">
+                  <FaUser />
+                  <span className="social__login__text">login</span>
+                </Link>
+                <Link className="header__top__social__login" to="/logout">
+                  <FaPowerOff />
+                  <span className="social__login__text">logout</span>
+                </Link>
+              </>
+            )}
+            {currentUser && (
+              <>
+                {" "}
+                <Link className="header__top__social__login" to="/login">
+                  <FaUser />
+                  <span className="social__login__text">{currentUser}</span>
+                </Link>
+                <Link className="header__top__social__login" to="/logout">
+                  <FaPowerOff />
+                  <span className="social__login__text">logout</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
-      <section class="header__middle">
-        <div class="container">
-          <div class="header__middle__logo">
+      <section className="header__middle">
+        <div className="container">
+          <div className="header__middle__logo">
             <a href="">
               <img src="/assets/images/logo.png" alt="Fashi" />
             </a>
           </div>
-          <div class="header__middle__search">
-            <select class="header__middle__search__categories" name="category">
+          <div className="header__middle__search">
+            <select
+              className="header__middle__search__categories"
+              name="category"
+            >
               <option value="All Categories">All Categories</option>
             </select>
-            <div class="search-input">
+            <div className="search-input">
               <input
                 type="text"
                 name="search"
                 placeholder="What do you need?"
               />
-              <i class="fa fa-search"></i>
+              <i className="fa fa-search"></i>
             </div>
           </div>
-          <div class="header__middle__cart">
-            <a class="notification-btn" href="">
-              <i class="fa fa-heart"></i>
-              <span class="notification-btn__badge">0</span>
+          <div className="header__middle__cart">
+            <a className="notification-btn" href="">
+              <i className="fa fa-heart"></i>
+              <span className="notification-btn__badge">0</span>
             </a>
 
-            <div class="notification-btn cart-hover-btn" href="">
-              <i class="fa fa-cart-plus"></i>
-              <span class="notification-btn__badge cart-badge">0</span>
-              <div class="cart">
-                <div class="cart__items"></div>
-                <div class="cart__total">
+            <div className="notification-btn cart-hover-btn" href="">
+              <i className="fa fa-cart-plus"></i>
+              <span className="notification-btn__badge cart-badge">0</span>
+              <div className="cart">
+                <div className="cart__items"></div>
+                <div className="cart__total">
                   <span>TOTAL:</span>
-                  <span class="cart__total__total-price">0</span>
+                  <span className="cart__total__total-price">0</span>
                 </div>
-                <button class="btn-primary cart__view-cart-btn">
+                <button className="btn-primary cart__view-cart-btn">
                   VIEW CART
                 </button>
-                <button class="btn-primary cart__checkout-btn">
+                <button className="btn-primary cart__checkout-btn">
                   CHECK OUT
                 </button>
               </div>
             </div>
 
-            <p class="header__middle__cart__total">$150.00</p>
+            <p className="header__middle__cart__total">$150.00</p>
           </div>
         </div>
       </section>
-      <section class="header__bottom">
-        <div class="container">
-          <div class="header__bottom__upper">
-            <select class="header__bottom__depart" name="departments">
+      <section className="header__bottom">
+        <div className="container">
+          <div className="header__bottom__upper">
+            <select className="header__bottom__depart" name="departments">
               <option value="All Categories">All DEPARTMENTS</option>
             </select>
-            <nav class="main-nav">
-              <ul class="main-nav__links">
+            <nav className="main-nav">
+              <ul className="main-nav__links">
                 <li>
                   <a href="">HOME</a>
                 </li>
@@ -119,12 +148,12 @@ const Header = () => {
               </ul>
             </nav>
           </div>
-          <div class="header__bottom__lower collapsible">
-            <div class="collapsible__header">
-              <i class="fa fa-arrow-circle-left collapsible__icon"></i>
+          <div className="header__bottom__lower collapsible">
+            <div className="collapsible__header">
+              <i className="fa fa-arrow-circle-left collapsible__icon"></i>
             </div>
-            <nav class="header__bottom__lower__nav collapsible__content">
-              <ul class="header__bottom__lower__nav__links">
+            <nav className="header__bottom__lower__nav collapsible__content">
+              <ul className="header__bottom__lower__nav__links">
                 <li>
                   <a href="">HOME</a>
                 </li>

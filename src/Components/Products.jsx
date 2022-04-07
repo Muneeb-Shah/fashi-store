@@ -2,53 +2,84 @@ import { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import { FaCartPlus, FaThumbsUp } from "react-icons/fa";
 
+const apiEndpoint = "http://localhost:1337/api";
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [selectedGender, setSelectedGender] = useState("all");
+  const [noProducts, setNoProducts] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
-      const result = await axios(
-        "http://localhost:1337/api/products?populate=*"
-      );
+      const result = await axios(`${apiEndpoint}/products?populate=*`);
       setProducts(result.data.data);
     };
     getProducts();
 
     const getCategories = async () => {
-      const result = await axios("http://localhost:1337/api/categories");
+      const result = await axios(`${apiEndpoint}/categories`);
       setCategories(result.data.data);
     };
     getCategories();
   }, []);
 
-  const [outlined, setOutlined] = useState([true, false, false]);
+  const handleGenderClick = async (gender) => {
+    setSelectedGender(gender);
 
-  const handleClick = async (gender) => {
     if (gender === "all") {
-      setOutlined([true, false, false]);
-      const result = await axios(
-        `http://localhost:1337/api/products?populate=*`
-      );
+      const result = await axios(`${apiEndpoint}/products?populate=*`);
+      if (result.data.data.length === 0) setNoProducts(true);
+      else if (result.data.data.length > 1) setNoProducts(false);
       setProducts(result.data.data);
     }
     if (gender === "women") {
-      setOutlined([false, true, false]);
       const result = await axios(
-        `http://localhost:1337/api/products?filters[gender][name][$eq]=women&populate=*`
+        `${apiEndpoint}/products?filters[gender][name][$eq]=women&populate=*`
       );
+      if (result.data.data.length === 0) setNoProducts(true);
+      else if (result.data.data.length > 1) setNoProducts(false);
       setProducts(result.data.data);
     }
     if (gender === "men") {
-      setOutlined([false, false, true]);
       const result = await axios(
-        `http://localhost:1337/api/products?filters[gender][name][$eq]=men&populate=*`
+        `${apiEndpoint}/products?filters[gender][name][$eq]=men&populate=*`
       );
+      if (result.data.data.length === 0) setNoProducts(true);
+      else if (result.data.data.length > 1) setNoProducts(false);
       setProducts(result.data.data);
     }
   };
 
-  console.log(products);
+  const handleCategoryClick = async (category) => {
+    if (selectedGender === "all") {
+      let result;
+      if (category === "All")
+        result = await axios(`${apiEndpoint}/products?populate=*`);
+      else
+        result = await axios(
+          `${apiEndpoint}/products?filters[categories][name][$eq]=${category}&populate=*`
+        );
+
+      if (result.data.data.length === 0) setNoProducts(true);
+      else if (result.data.data.length > 1) setNoProducts(false);
+
+      setProducts(result.data.data);
+    } else {
+      let result;
+      if (category === "All")
+        result = await axios(
+          `${apiEndpoint}/products?filters[gender][name][$eq]=${selectedGender}&populate=*`
+        );
+      else
+        result = await axios(
+          `${apiEndpoint}/products?filters[gender][name][$eq]=${selectedGender}&filters[categories][name][$eq]=${category}&populate=*`
+        );
+      if (result.data.data.length === 0) setNoProducts(true);
+      else if (result.data.data.length > 1) setNoProducts(false);
+      setProducts(result.data.data);
+    }
+  };
 
   return (
     <Fragment>
@@ -57,28 +88,28 @@ const Products = () => {
           <div className="banner-content">
             <div
               className="banner-content__kids banner-content__item"
-              onClick={() => handleClick(`all`)}
+              onClick={() => handleGenderClick(`all`)}
             >
               <div className="outline"></div>
-              {outlined[0] && <div className="outlined"></div>}
+              {selectedGender === "all" && <div className="outlined"></div>}
               <p className="banner-content__desc">All</p>
             </div>
 
             <div
               className="banner-content__women banner-content__item"
-              onClick={() => handleClick(`women`)}
+              onClick={() => handleGenderClick(`women`)}
             >
               <div className="outline"></div>
-              <div className={outlined[1] ? "outlined" : ""}></div>
+              {selectedGender === "women" && <div className="outlined"></div>}
               <p className="banner-content__desc">Women's</p>
             </div>
 
             <div
               className="banner-content__men banner-content__item"
-              onClick={() => handleClick(`men`)}
+              onClick={() => handleGenderClick(`men`)}
             >
               <div className="outline"></div>
-              {outlined[2] && <div className="outlined"></div>}
+              {selectedGender === "men" && <div className="outlined"></div>}
               <p className="banner-content__desc">Men's</p>
             </div>
           </div>
@@ -86,23 +117,22 @@ const Products = () => {
       </section>
       <ul className="products-category-nav">
         {categories.map((category) => (
-          <li className="products-category-nav__item" key={category.id}>
+          <li
+            className="products-category-nav__item"
+            key={category.id}
+            onClick={() => handleCategoryClick(category.attributes.name)}
+          >
             {category.attributes.name}
           </li>
         ))}
-        {/* <li>
-          <a href="">Clothings</a>
-        </li>
-        <li>
-          <a href="">Handbags</a>
-        </li>
-        <li>
-          <a href="">Shoes</a>
-        </li>
-        <li>
-          <a href="">Accessories</a>
-        </li> */}
       </ul>
+      {noProducts && (
+        <div className="container">
+          <div className="no-products">
+            <p>COMMING SOON...</p>
+          </div>
+        </div>
+      )}
       <section className="product-page__products container">
         {products.map((product) => (
           <div key={product.id} className="item-card">
