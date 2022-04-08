@@ -1,10 +1,9 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, createContext, Fragment } from "react";
 import axios from "axios";
-import { FaCartPlus, FaThumbsUp } from "react-icons/fa";
 
 const apiEndpoint = "http://localhost:1337/api";
 
-const Products = () => {
+const Products = ({ handleAddCartClick }) => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedGender, setSelectedGender] = useState("all");
@@ -141,15 +140,13 @@ const Products = () => {
               className="product-img"
             />
             <div className="item-card__btns">
-              <button className="btn-primary">
-                <FaCartPlus />
-              </button>
-              <button className="btn-secondary add-to-cart">Add to Cart</button>
-              <button className="btn-secondary">
-                <FaThumbsUp />
+              <button
+                className="btn-secondary add-to-cart"
+                onClick={() => handleAddCartClick(product)}
+              >
+                Add to Cart
               </button>
             </div>
-            <i className="fa fa-heart item-card__like-btn"></i>
             <div className="item-card__desc">
               <p className="item-card__desc__category">
                 {product.attributes.category}

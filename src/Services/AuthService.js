@@ -18,7 +18,6 @@ export function getCurrentUser() {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(";").shift();
   }
-  console.log(jwtDecode(getCookie("token")));
   try {
     const jwt = getCookie("token");
     return jwtDecode(jwt);

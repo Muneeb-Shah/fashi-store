@@ -782,10 +782,10 @@ p {
   gap: 2rem;
 }
 
-.header__middle__cart__total {
+/* .header__middle__cart__total {
   color: #252525;
   font-weight: 600;
-}
+} */
 
 @media screen and (max-width: 768px) {
   .header__middle .container {
@@ -918,12 +918,12 @@ p {
 
 /* CART */
 
-.header__middle .container {
-  position: relative;
+.header__middle {
+  /* position: relative; */
 }
 
-.cart {
-  position: absolute;
+.cart .container {
+  /* position: absolute;
   top: 200%;
   right: -300%;
   width: 490px;
@@ -932,7 +932,11 @@ p {
   transition: 300ms;
   opacity: 0;
   visibility: hidden;
-  z-index: 999;
+  z-index: 999; */
+}
+
+.cart .container {
+  max-width: 1155px;
 }
 
 .cart-hover-btn:hover .cart {
@@ -951,6 +955,21 @@ p {
   border-bottom: 1px solid var(--color-border);
 }
 
+.add-to-cart {
+  width: 90%;
+}
+
+.cart__item-details-left,
+.cart__item-details-right {
+  display: flex;
+  align-items: center;
+  gap: 10rem;
+}
+
+.cart__item-details-left {
+  width: 50%;
+}
+
 .cart__items__item {
   display: flex;
   font-size: 1.6rem;
@@ -964,6 +983,22 @@ p {
   width: 72px;
 }
 
+.cart__item-qty-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.cart__item-qty-section button {
+  height: 3rem;
+  width: 2rem;
+  padding: 0.3rem;
+  margin: 0 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 1.5rem;
+}
+
 .cart__item-price,
 .cart__item-qty {
   color: var(--color-primary);
@@ -975,7 +1010,6 @@ p {
 
 .cart__item__remove-btn {
   border: none;
-  height: 16px;
   width: 16px;
   background-color: transparent;
   color: var(--color-body);
@@ -990,12 +1024,27 @@ p {
   font-size: 1.4rem;
 }
 
-.cart__view-cart-btn,
-.cart__checkout-btn {
+.cart-btns {
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.cart__clear-cart-btn,
+.cart__checkout-btn {
+  width: 16rem;
+  height: 4rem;
   font-size: 1.2rem;
 }
 
+.cart__clear-cart-btn {
+  background-color: #bb3333;
+}
+
+.cart__clear-cart-btn:hover {
+  background-color: #bb2222;
+}
 .cart .view-cart-btn-hidden {
   /* display: none; */
 }
@@ -1004,6 +1053,13 @@ p {
   color: #fff;
   background-color: #191919;
   margin-bottom: 1rem;
+}
+
+.cart__items-no-products {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
 @media screen and (max-width: 768px) {

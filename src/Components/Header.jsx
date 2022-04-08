@@ -18,20 +18,6 @@ const Header = ({ currentUser }) => {
             </div>
           </div>
           <div className="header__top__social">
-            <ul className="header__top__social__social-icons">
-              <li>
-                <i className="fa fa-faucet"></i>
-              </li>
-              <li>
-                <i className="fa fa-battery-full"></i>
-              </li>
-              <li>
-                <i className="fa fa-envelope"></i>
-              </li>
-              <li>
-                <i className="fa fa-fan"></i>
-              </li>
-            </ul>
             <div className="header__top__social__lang">
               <FaLanguage />
               <select className="social__lang__text" name="language">
@@ -46,21 +32,13 @@ const Header = ({ currentUser }) => {
                   <FaUser />
                   <span className="social__login__text">login</span>
                 </Link>
-                <Link className="header__top__social__login" to="/logout">
-                  <FaPowerOff />
-                  <span className="social__login__text">logout</span>
-                </Link>
               </>
             )}
             {currentUser && (
               <>
                 {" "}
-                <Link className="header__top__social__login" to="/login">
-                  <FaUser />
-                  <span className="social__login__text">{currentUser}</span>
-                </Link>
                 <Link className="header__top__social__login" to="/logout">
-                  <FaPowerOff />
+                  <FaUser />
                   <span className="social__login__text">logout</span>
                 </Link>
               </>
@@ -93,28 +71,9 @@ const Header = ({ currentUser }) => {
           </div>
           <div className="header__middle__cart">
             <a className="notification-btn" href="">
-              <i className="fa fa-heart"></i>
+              <i className="fa fa-cart-plus"></i>
               <span className="notification-btn__badge">0</span>
             </a>
-
-            <div className="notification-btn cart-hover-btn" href="">
-              <i className="fa fa-cart-plus"></i>
-              <span className="notification-btn__badge cart-badge">0</span>
-              <div className="cart">
-                <div className="cart__items"></div>
-                <div className="cart__total">
-                  <span>TOTAL:</span>
-                  <span className="cart__total__total-price">0</span>
-                </div>
-                <button className="btn-primary cart__view-cart-btn">
-                  VIEW CART
-                </button>
-                <button className="btn-primary cart__checkout-btn">
-                  CHECK OUT
-                </button>
-              </div>
-            </div>
-
             <p className="header__middle__cart__total">$150.00</p>
           </div>
         </div>
@@ -131,7 +90,7 @@ const Header = ({ currentUser }) => {
                   <a href="">HOME</a>
                 </li>
                 <li>
-                  <a href="">SHOP</a>
+                  <Link to="/products">SHOP</Link>
                 </li>
                 <li>
                   <a href="">COLLECTION</a>
