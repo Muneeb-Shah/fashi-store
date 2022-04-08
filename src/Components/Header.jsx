@@ -2,7 +2,7 @@ import React from "react";
 import { FaUser, FaLanguage, FaPowerOff } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, productsInCart }) => {
   return (
     <header id="header">
       <section className="header__top">
@@ -70,11 +70,13 @@ const Header = ({ currentUser }) => {
             </div>
           </div>
           <div className="header__middle__cart">
-            <a className="notification-btn" href="">
+            <Link className="notification-btn" to="/cart">
               <i className="fa fa-cart-plus"></i>
-              <span className="notification-btn__badge">0</span>
-            </a>
-            <p className="header__middle__cart__total">$150.00</p>
+              <span className="notification-btn__badge">
+                {productsInCart.length}
+              </span>
+            </Link>
+            {/* <p className="header__middle__cart__total">$150.00</p> */}
           </div>
         </div>
       </section>
@@ -87,7 +89,7 @@ const Header = ({ currentUser }) => {
             <nav className="main-nav">
               <ul className="main-nav__links">
                 <li>
-                  <a href="">HOME</a>
+                  <Link to="/">HOME</Link>
                 </li>
                 <li>
                   <Link to="/products">SHOP</Link>

@@ -935,6 +935,10 @@ p {
   z-index: 999; */
 }
 
+.cart {
+  margin-top: 10rem;
+}
+
 .cart .container {
   max-width: 1155px;
 }

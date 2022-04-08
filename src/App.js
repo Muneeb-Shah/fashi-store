@@ -75,22 +75,33 @@ function App() {
   console.log(productsInCart);
   return (
     <Fragment>
-      <Header currentUser={currentUser} />
+      <Header currentUser={currentUser} productsInCart={productsInCart} />
       <Switch>
         <Route exact path="/register" component={RegisterForm} />
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/logout" component={Logout} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/products" component={Products} />
+        <Route
+          exact
+          path="/cart"
+          render={(props) => (
+            <Cart
+              productsInCart={productsInCart}
+              handleProductIncrement={handleProductIncrement}
+              handleProductDecrement={handleProductDecrement}
+              handleProductRemove={handleProductRemove}
+              handleClearCart={handleClearCart}
+              {...props}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <Products handleAddCartClick={handleAddCartClick} {...props} />
+          )}
+        />
       </Switch>
-      <Products handleAddCartClick={handleAddCartClick} />
-      <Cart
-        productsInCart={productsInCart}
-        handleProductIncrement={handleProductIncrement}
-        handleProductDecrement={handleProductDecrement}
-        handleProductRemove={handleProductRemove}
-        handleClearCart={handleClearCart}
-      />
     </Fragment>
   );
 }

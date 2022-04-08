@@ -8,6 +8,13 @@ const Cart = ({
   handleProductRemove,
   handleClearCart,
 }) => {
+  if (productsInCart.length) {
+    const total = 0;
+    productsInCart.reduce(
+      (product) => total + product.attributes.price * product.qty
+    );
+    console.log("total   " + total);
+  }
   return (
     <div className="cart">
       <div className="container">
