@@ -11,6 +11,8 @@ import Banner from "./Components/Banner";
 import RegisterForm from "./Components/RegisterForm";
 import LoginForm from "./Components/LoginForm";
 import Logout from "./Components/Logout";
+import Cart from "./Components/Cart";
+
 import { getCurrentUser } from "./Services/AuthService";
 
 function App() {
@@ -20,7 +22,57 @@ function App() {
     setCurrentUser(user);
   }, []);
 
-  console.log(currentUser);
+  const [productsInCart, setProductsInCart] = useState([]);
+  const handleAddCartClick = (product) => {
+    const productExist = productsInCart.find((item) => item.id === product.id);
+    if (productExist) {
+      setProductsInCart(
+        productsInCart.map((item) =>
+          item.id === product.id
+            ? { ...productExist, qty: productExist.qty + 1 }
+            : item
+        )
+      );
+    } else {
+      setProductsInCart([...productsInCart, { ...product, qty: 1 }]);
+    }
+  };
+
+  const handleProductIncrement = (product) => {
+    setProductsInCart(
+      productsInCart.map((item) =>
+        item.id === product.id ? { ...product, qty: product.qty + 1 } : item
+      )
+    );
+  };
+
+  const handleProductDecrement = (product) => {
+    if (product.qty === 1) {
+      const updatedProducts = productsInCart.filter(
+        (item) => item.id !== product.id
+      );
+      setProductsInCart(updatedProducts);
+    } else {
+      setProductsInCart(
+        productsInCart.map((item) =>
+          item.id === product.id ? { ...product, qty: product.qty - 1 } : item
+        )
+      );
+    }
+  };
+
+  const handleProductRemove = (product) => {
+    const updatedProducts = productsInCart.filter(
+      (item) => item.id !== product.id
+    );
+    setProductsInCart(updatedProducts);
+  };
+
+  const handleClearCart = () => {
+    setProductsInCart([]);
+  };
+
+  console.log(productsInCart);
   return (
     <Fragment>
       <Header currentUser={currentUser} />
@@ -28,7 +80,17 @@ function App() {
         <Route exact path="/register" component={RegisterForm} />
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/products" component={Products} />
       </Switch>
+      <Products handleAddCartClick={handleAddCartClick} />
+      <Cart
+        productsInCart={productsInCart}
+        handleProductIncrement={handleProductIncrement}
+        handleProductDecrement={handleProductDecrement}
+        handleProductRemove={handleProductRemove}
+        handleClearCart={handleClearCart}
+      />
     </Fragment>
   );
 }
