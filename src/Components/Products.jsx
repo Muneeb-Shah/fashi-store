@@ -1,11 +1,14 @@
 import { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const apiEndpoint = "http://localhost:1337/api";
 
 const Products = ({ handleAddCartClick }) => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGender, setSelectedGender] = useState("all");
   const [noProducts, setNoProducts] = useState(false);
 
@@ -51,6 +54,7 @@ const Products = ({ handleAddCartClick }) => {
   };
 
   const handleCategoryClick = async (category) => {
+    setSelectedCategory(category);
     if (selectedGender === "all") {
       let result;
       if (category === "All")
@@ -79,13 +83,24 @@ const Products = ({ handleAddCartClick }) => {
       setProducts(result.data.data);
     }
   };
+  while (products.length === 0) {
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+        <div className="loader-text">LOADING PRODUCTS</div>
+      </Backdrop>
+    );
+  }
   return (
     <Fragment>
       <section className="banner">
         <div className="container">
           <div className="banner-content">
             <div
-              className="banner-content__kids banner-content__item"
+              className="banner-content__kids banner-content__item banner-content__item__clickable"
               onClick={() => handleGenderClick(`all`)}
             >
               <div className="outline"></div>
@@ -94,7 +109,7 @@ const Products = ({ handleAddCartClick }) => {
             </div>
 
             <div
-              className="banner-content__women banner-content__item"
+              className="banner-content__women banner-content__item banner-content__item__clickable"
               onClick={() => handleGenderClick(`women`)}
             >
               <div className="outline"></div>
@@ -103,7 +118,7 @@ const Products = ({ handleAddCartClick }) => {
             </div>
 
             <div
-              className="banner-content__men banner-content__item"
+              className="banner-content__men banner-content__item banner-content__item__clickable"
               onClick={() => handleGenderClick(`men`)}
             >
               <div className="outline"></div>
@@ -114,15 +129,46 @@ const Products = ({ handleAddCartClick }) => {
         </div>
       </section>
       <ul className="products-category-nav">
-        {categories.map((category) => (
-          <li
-            className="products-category-nav__item"
-            key={category.id}
-            onClick={() => handleCategoryClick(category.attributes.name)}
-          >
-            {category.attributes.name}
-          </li>
-        ))}
+        <li
+          className={
+            selectedCategory === "Jeans"
+              ? `products-category-nav__item__selected`
+              : "products-category-nav__item"
+          }
+          onClick={(e) => handleCategoryClick("Jeans")}
+        >
+          Jeans
+        </li>
+        <li
+          className={
+            selectedCategory === "Shirts"
+              ? `products-category-nav__item__selected`
+              : "products-category-nav__item"
+          }
+          onClick={() => handleCategoryClick("Shirts")}
+        >
+          Shirts
+        </li>
+        <li
+          className={
+            selectedCategory === "Shoes"
+              ? `products-category-nav__item__selected`
+              : "products-category-nav__item"
+          }
+          onClick={() => handleCategoryClick("Shoes")}
+        >
+          Shoes
+        </li>
+        <li
+          className={
+            selectedCategory === "All"
+              ? `products-category-nav__item__selected`
+              : "products-category-nav__item"
+          }
+          onClick={() => handleCategoryClick("All")}
+        >
+          All
+        </li>
       </ul>
       {noProducts && (
         <div className="container">

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUser, FaLanguage, FaPowerOff } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = ({ currentUser, productsInCart }) => {
+  const [expanded, setExpanded] = useState(false);
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
   return (
     <header id="header">
       <section className="header__top">
@@ -10,7 +14,9 @@ const Header = ({ currentUser, productsInCart }) => {
           <div className="header__top__contact">
             <div className="header__top__contact__email">
               <i className="fa fa-envelope"></i>
-              <span>hello.colorlib@gmail.com</span>
+              <span className="header__top__contact__email__content">
+                hello.colorlib@gmail.com
+              </span>
             </div>
             <div className="header__top__contact__phone">
               <i className="fa fa-phone"></i>
@@ -49,9 +55,9 @@ const Header = ({ currentUser, productsInCart }) => {
       <section className="header__middle">
         <div className="container">
           <div className="header__middle__logo">
-            <a href="">
+            <Link to="/">
               <img src="/assets/images/logo.png" alt="Fashi" />
-            </a>
+            </Link>
           </div>
           <div className="header__middle__search">
             <select
@@ -94,23 +100,29 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/products">SHOP</Link>
                 </li>
                 <li>
-                  <Link to="/products">COLLECTION</Link>
+                  <Link to="/blog">BLOG</Link>
                 </li>
                 <li>
-                  <Link to="/products">BLOG</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </li>
                 <li>
-                  <Link to="/products">CONTACT</Link>
-                </li>
-                <li>
-                  <Link to="/products">PAGES</Link>=
+                  <Link to="/cart">CART</Link>
                 </li>
               </ul>
             </nav>
           </div>
-          <div className="header__bottom__lower collapsible">
+          <div
+            className={
+              expanded
+                ? `header__bottom__lower collapsible collapsible--expanded`
+                : "header__bottom__lower collapsible"
+            }
+          >
             <div className="collapsible__header">
-              <i className="fa fa-arrow-circle-left collapsible__icon"></i>
+              <i
+                className="fa fa-arrow-circle-left collapsible__icon"
+                onClick={toggleExpand}
+              ></i>
             </div>
             <nav className="header__bottom__lower__nav collapsible__content">
               <ul className="header__bottom__lower__nav__links">
@@ -121,16 +133,13 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/products">SHOP</Link>
                 </li>
                 <li>
-                  <Link to="/products">COLLECTION</Link>
+                  <Link to="/blog">BLOG</Link>
                 </li>
                 <li>
-                  <Link to="/products">BLOG</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </li>
                 <li>
-                  <Link to="/products">CONTACT</Link>
-                </li>
-                <li>
-                  <Link to="/products">PAGES</Link>=
+                  <Link to="/cart">CART</Link>
                 </li>
               </ul>
             </nav>

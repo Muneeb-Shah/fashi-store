@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Deal = () => {
   return (
     <section id="deal" class="deal">
@@ -16,25 +18,9 @@ const Deal = () => {
               <span class="description">/HandBag</span>
             </div>
           </div>
-          <div class="timer">
-            <div class="timer__item">
-              <span class="timer__item__val">27</span>
-              <p class="timer__item__desc description">DAYS</p>
-            </div>
-            <div class="timer__item">
-              <span class="timer__item__val">27</span>
-              <p class="timer__item__desc description">DAYS</p>
-            </div>
-            <div class="timer__item">
-              <span class="timer__item__val">27</span>
-              <p class="timer__item__desc description">DAYS</p>
-            </div>
-            <div class="timer__item">
-              <span class="timer__item__val">27</span>
-              <p class="timer__item__desc description">DAYS</p>
-            </div>
-          </div>
-          <button class="btn-primary">SHOP NOW</button>
+          <Link to="/products">
+            <button class="btn-primary">SHOP NOW</button>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,7 +1,8 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
@@ -15,6 +16,7 @@ const Cart = (props) => {
     handleProductDecrement,
     handleProductRemove,
     handleClearCart,
+    currentUser,
   } = props;
 
   let totalPrice = 0;
@@ -27,26 +29,54 @@ const Cart = (props) => {
 
   const handleToken = async (token) => {
     const product = { name: "All Cart Products", price: totalPrice };
-    const response = await axios.post("http://localhost:8080/checkout", {
-      product,
-      token,
-    });
+
+    const response = await toast.promise(
+      axios.post("http://localhost:8080/checkout", {
+        product,
+        token,
+      }),
+      {
+        pending: "Please Wait",
+      },
+      { position: "top-center", theme: "dark" }
+    );
+
     const status = response.data.status;
+
     if (status === "success") {
       handleClearCart();
-      props.history.push("/");
       toast.success("Thanks for Shopping!", {
-        position: toast.POSITION.TOP_CENTER,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+        progress: undefined,
+      });
+      props.history.push("/");
+    }
+    if (status === "faliure") {
+      toast.error("Payment Failed!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
     }
   };
-  console.log(props);
+
   return (
     <div className="cart">
       <div className="container">
         <div className="cart__items">
           {productsInCart.length < 1 ? (
-            <div className="cart__items-no-products">No Products In Cart</div>
+            <div className="cart__items-no-products">Your cart is empty</div>
           ) : (
             productsInCart.map((product) => (
               <div key={product.id} className="cart__items__item">
@@ -95,24 +125,36 @@ const Cart = (props) => {
             ${totalPrice}
           </span>
         </div>
-        <div className="cart-btns">
-          <button
-            className="btn-primary cart__clear-cart-btn"
-            onClick={handleClearCart}
-          >
-            CLEAR CART
-          </button>
-          <div className="stripe-checkout">
-            <StripeCheckout
-              stripeKey="pk_test_51KnZokGDP9hBttjZswQWWgqmk6wiInRLcrnj0WxbPRe2xl4LzkTooWsX4JsW65ITd8oXm26M0kIEsWIY1u8EWXyJ00C3Hrz9On"
-              token={handleToken}
-              billingAddress
-              shippingAddress
-              amount={totalPrice * 100}
-              name="All Cart Products"
-            ></StripeCheckout>
+        {productsInCart.length > 0 && (
+          <div className="cart-btns">
+            <button
+              className="btn-primary cart__clear-cart-btn"
+              onClick={handleClearCart}
+            >
+              CLEAR CART
+            </button>
+            <div className="stripe-checkout">
+              {currentUser ? (
+                <StripeCheckout
+                  stripeKey="pk_test_51KnZokGDP9hBttjZswQWWgqmk6wiInRLcrnj0WxbPRe2xl4LzkTooWsX4JsW65ITd8oXm26M0kIEsWIY1u8EWXyJ00C3Hrz9On"
+                  token={handleToken}
+                  billingAddress
+                  shippingAddress
+                  amount={totalPrice * 100}
+                  name="All Cart Products"
+                ></StripeCheckout>
+              ) : (
+                <Link
+                  to={{ pathname: "/login", state: { from: props.location } }}
+                >
+                  <button className="btn-primary cart__checkout-btn">
+                    LOGIN TO PAY
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -7,9 +8,9 @@ const Footer = () => {
         <div class="footer__content">
           <ul class="footer__address">
             <li class="footer__address__logo">
-              <a href="">
+              <Link to="/">
                 <img src="/assets/images/xfooter-logo.png" alt="Fashi." />
-              </a>
+              </Link>
             </li>
             <li>Address: 60 Road 11378 New York</li>
             <li>Phone: +65 11.188.888</li>

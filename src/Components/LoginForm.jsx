@@ -13,7 +13,8 @@ const LoginForm = (props) => {
     try {
       await login(user);
       setError("");
-      window.location = "/";
+      const { state } = props.location;
+      window.location = state ? state.from.pathname : "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         if (ex.response.data.error.message === "Invalid identifier or password")
@@ -21,6 +22,8 @@ const LoginForm = (props) => {
       }
     }
   };
+
+  console.log(props.location);
 
   return (
     <form onSubmit={handleSubmit}>
