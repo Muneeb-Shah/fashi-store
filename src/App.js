@@ -12,17 +12,18 @@ import RegisterForm from "./Components/RegisterForm";
 import LoginForm from "./Components/LoginForm";
 import Logout from "./Components/Logout";
 import Cart from "./Components/Cart";
-
+import CartContextProvider from "./Global/CartContext";
 import { getCurrentUser } from "./Services/AuthService";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
+  const [productsInCart, setProductsInCart] = useState([]);
+
   useEffect(() => {
     const user = getCurrentUser();
     setCurrentUser(user);
   }, []);
 
-  const [productsInCart, setProductsInCart] = useState([]);
   const handleAddCartClick = (product) => {
     const productExist = productsInCart.find((item) => item.id === product.id);
     if (productExist) {
@@ -72,9 +73,8 @@ function App() {
     setProductsInCart([]);
   };
 
-  console.log(productsInCart);
   return (
-    <Fragment>
+    <>
       <Header currentUser={currentUser} productsInCart={productsInCart} />
       <Switch>
         <Route exact path="/register" component={RegisterForm} />
@@ -85,15 +85,16 @@ function App() {
           path="/cart"
           render={(props) => (
             <Cart
+              {...props}
               productsInCart={productsInCart}
               handleProductIncrement={handleProductIncrement}
               handleProductDecrement={handleProductDecrement}
               handleProductRemove={handleProductRemove}
               handleClearCart={handleClearCart}
-              {...props}
             />
           )}
         />
+
         <Route
           exact
           path="/"
@@ -102,7 +103,7 @@ function App() {
           )}
         />
       </Switch>
-    </Fragment>
+    </>
   );
 }
 

@@ -1,20 +1,46 @@
+import axios from "axios";
 import React from "react";
+import StripeCheckout from "react-stripe-checkout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 const apiEndpoint = "http://localhost:1337";
 
-const Cart = ({
-  productsInCart,
-  handleProductIncrement,
-  handleProductDecrement,
-  handleProductRemove,
-  handleClearCart,
-}) => {
-  if (productsInCart.length) {
-    const total = 0;
-    productsInCart.reduce(
-      (product) => total + product.attributes.price * product.qty
+const Cart = (props) => {
+  const {
+    productsInCart,
+    handleProductIncrement,
+    handleProductDecrement,
+    handleProductRemove,
+    handleClearCart,
+  } = props;
+
+  let totalPrice = 0;
+  if (productsInCart) {
+    productsInCart.forEach(
+      (product) =>
+        (totalPrice = totalPrice + product.attributes.price * product.qty)
     );
-    console.log("total   " + total);
   }
+
+  const handleToken = async (token) => {
+    const product = { name: "All Cart Products", price: totalPrice };
+    const response = await axios.post("http://localhost:8080/checkout", {
+      product,
+      token,
+    });
+    const status = response.data.status;
+    if (status === "success") {
+      handleClearCart();
+      props.history.push("/");
+      toast.success("Thanks for Shopping!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+  console.log(props);
   return (
     <div className="cart">
       <div className="container">
@@ -31,6 +57,11 @@ const Cart = ({
                   />
                   <div className="cart__item-name">
                     {product.attributes.name}
+                  </div>
+                  <div className="cart__total">
+                    <span className="cart__total__total-price">
+                      ${product.attributes.price}
+                    </span>
                   </div>
                 </div>
                 <div className="cart__item-qty-section">
@@ -60,7 +91,9 @@ const Cart = ({
         </div>
         <div className="cart__total">
           <span>TOTAL:</span>
-          <span className="cart__total__total-price">0</span>
+          <span className="cart__total__total-price total-price">
+            ${totalPrice}
+          </span>
         </div>
         <div className="cart-btns">
           <button
@@ -69,7 +102,16 @@ const Cart = ({
           >
             CLEAR CART
           </button>
-          <button className="btn-primary cart__checkout-btn">CHECK OUT</button>
+          <div className="stripe-checkout">
+            <StripeCheckout
+              stripeKey="pk_test_51KnZokGDP9hBttjZswQWWgqmk6wiInRLcrnj0WxbPRe2xl4LzkTooWsX4JsW65ITd8oXm26M0kIEsWIY1u8EWXyJ00C3Hrz9On"
+              token={handleToken}
+              billingAddress
+              shippingAddress
+              amount={totalPrice * 100}
+              name="All Cart Products"
+            ></StripeCheckout>
+          </div>
         </div>
       </div>
     </div>

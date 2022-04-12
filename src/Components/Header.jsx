@@ -76,7 +76,6 @@ const Header = ({ currentUser, productsInCart }) => {
                 {productsInCart.length}
               </span>
             </Link>
-            {/* <p className="header__middle__cart__total">$150.00</p> */}
           </div>
         </div>
       </section>
@@ -95,16 +94,16 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/products">SHOP</Link>
                 </li>
                 <li>
-                  <a href="">COLLECTION</a>
+                  <Link to="/products">COLLECTION</Link>
                 </li>
                 <li>
-                  <a href="">BLOG</a>
+                  <Link to="/products">BLOG</Link>
                 </li>
                 <li>
-                  <a href="">CONTACT</a>
+                  <Link to="/products">CONTACT</Link>
                 </li>
                 <li>
-                  <a href="">PAGES</a>
+                  <Link to="/products">PAGES</Link>=
                 </li>
               </ul>
             </nav>
@@ -116,22 +115,22 @@ const Header = ({ currentUser, productsInCart }) => {
             <nav className="header__bottom__lower__nav collapsible__content">
               <ul className="header__bottom__lower__nav__links">
                 <li>
-                  <a href="">HOME</a>
+                  <Link to="/">HOME</Link>
                 </li>
                 <li>
-                  <a href="">SHOP</a>
+                  <Link to="/products">SHOP</Link>
                 </li>
                 <li>
-                  <a href="">COLLECTION</a>
+                  <Link to="/products">COLLECTION</Link>
                 </li>
                 <li>
-                  <a href="">BLOG</a>
+                  <Link to="/products">BLOG</Link>
                 </li>
                 <li>
-                  <a href="">CONTACT</a>
+                  <Link to="/products">CONTACT</Link>
                 </li>
                 <li>
-                  <a href="">PAGES</a>
+                  <Link to="/products">PAGES</Link>=
                 </li>
               </ul>
             </nav>

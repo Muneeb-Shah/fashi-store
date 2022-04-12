@@ -1008,8 +1008,12 @@ p {
   color: var(--color-primary);
 }
 
+.per-product-price {
+}
+
 .cart__item-name {
   color: var(--color-accent);
+  flex: 1;
 }
 
 .cart__item__remove-btn {
@@ -1026,6 +1030,11 @@ p {
   padding: 2rem 0;
   color: var(--color-primary);
   font-size: 1.4rem;
+  flex: 1;
+}
+
+.total-price {
+  font-weight: 700;
 }
 
 .cart-btns {

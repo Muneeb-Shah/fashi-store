@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, Fragment } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
 
 const apiEndpoint = "http://localhost:1337/api";
@@ -79,7 +79,6 @@ const Products = ({ handleAddCartClick }) => {
       setProducts(result.data.data);
     }
   };
-
   return (
     <Fragment>
       <section className="banner">
