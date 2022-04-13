@@ -23,8 +23,6 @@ const LoginForm = (props) => {
     }
   };
 
-  console.log(props.location);
-
   return (
     <form onSubmit={handleSubmit}>
       <h1 className="form__heading">Login</h1>

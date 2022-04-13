@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getCurrentUser, getUserOrders } from "../Services/AuthService";
 import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -55,8 +56,30 @@ const Cart = (props) => {
         theme: "colored",
         progress: undefined,
       });
-      props.history.push("/");
+
+      const newOrder = {
+        data: {
+          status: "pending",
+          order_details: {
+            order_amount: totalPrice,
+            order_products: productsInCart,
+          },
+          user: currentUser.id,
+        },
+      };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:1337/api/orders",
+          newOrder
+        );
+      } catch (error) {
+        console.log(error);
+      }
+
+      props.history.push("/orders");
     }
+
     if (status === "faliure") {
       toast.error("Payment Failed!", {
         position: "top-center",
@@ -73,6 +96,9 @@ const Cart = (props) => {
 
   return (
     <div className="cart">
+      <div className="section-heading">
+        <h2 className="section-heading__heading">Cart</h2>
+      </div>
       <div className="container">
         <div className="cart__items">
           {productsInCart.length < 1 ? (
@@ -81,12 +107,14 @@ const Cart = (props) => {
             productsInCart.map((product) => (
               <div key={product.id} className="cart__items__item">
                 <div className="cart__item-details-left">
-                  <img
-                    src={`${apiEndpoint}${product.attributes.featureImage.data.attributes.url}`}
-                    alt=""
-                  />
-                  <div className="cart__item-name">
-                    {product.attributes.name}
+                  <div className="product-pic-title">
+                    <img
+                      src={`${apiEndpoint}${product.attributes.featureImage.data.attributes.url}`}
+                      alt=""
+                    />
+                    <div className="cart__item-name">
+                      {product.attributes.name}
+                    </div>
                   </div>
                   <div className="cart__total">
                     <span className="cart__total__total-price">

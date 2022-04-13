@@ -95,7 +95,10 @@ const Products = ({ handleAddCartClick }) => {
     );
   }
   return (
-    <Fragment>
+    <section className="shop">
+      <div className="section-heading">
+        <h2 className="section-heading__heading">Shop</h2>
+      </div>
       <section className="banner">
         <div className="container">
           <div className="banner-content">
@@ -204,7 +207,7 @@ const Products = ({ handleAddCartClick }) => {
           </div>
         ))}
       </section>
-    </Fragment>
+    </section>
   );
 };
 

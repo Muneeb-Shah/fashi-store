@@ -4,7 +4,6 @@ import "./App.css";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
 import Footer from "./Components/Footer";
-import ProductsPage from "./Components/ProductsPage";
 import Products from "./Components/Products";
 import RegisterForm from "./Components/RegisterForm";
 import LoginForm from "./Components/LoginForm";
@@ -16,9 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 import Blog from "./Components/Blog";
 import NotFound from "./Components/NotFound";
 import Contact from "./Components/Contact";
+import Orders from "./Components/Orders";
+import axios from "axios";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser] = useState(getCurrentUser());
   const [productsInCart, setProductsInCart] = useState([]);
 
   useEffect(() => {
@@ -28,11 +29,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
   }, [productsInCart]);
-
-  useEffect(() => {
-    const user = getCurrentUser();
-    setCurrentUser(user);
-  }, []);
 
   const handleAddCartClick = (product) => {
     const productExist = productsInCart.find((item) => item.id === product.id);
@@ -102,6 +98,19 @@ function App() {
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/blog" component={Blog} />
+        <Route
+          exact
+          path="/orders"
+          render={(props) => {
+            if (!currentUser)
+              return (
+                <Redirect
+                  to={{ pathname: "/login", state: { from: props.location } }}
+                />
+              );
+            else return <Orders currentUser={currentUser} {...props} />;
+          }}
+        />
         <Route
           exact
           path="/cart"

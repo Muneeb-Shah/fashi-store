@@ -88,9 +88,6 @@ const Header = ({ currentUser, productsInCart }) => {
       <section className="header__bottom">
         <div className="container">
           <div className="header__bottom__upper">
-            <select className="header__bottom__depart" name="departments">
-              <option value="All Categories">All DEPARTMENTS</option>
-            </select>
             <nav className="main-nav">
               <ul className="main-nav__links">
                 <li>
@@ -106,7 +103,7 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/contact">CONTACT</Link>
                 </li>
                 <li>
-                  <Link to="/cart">CART</Link>
+                  <Link to="/orders">MY ORDERS</Link>
                 </li>
               </ul>
             </nav>
@@ -139,7 +136,7 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/contact">CONTACT</Link>
                 </li>
                 <li>
-                  <Link to="/cart">CART</Link>
+                  <Link to="/orders">MY ORDERS</Link>
                 </li>
               </ul>
             </nav>
