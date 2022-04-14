@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
-const apiEndpoint = "http://localhost:1337";
+const apiEndpoint = "https://fashi-backend.herokuapp.com/";
 
 const Cart = (props) => {
   const {
@@ -70,7 +70,7 @@ const Cart = (props) => {
 
       try {
         const response = await axios.post(
-          "http://localhost:1337/api/orders",
+          "https://fashi-backend.herokuapp.com/api/orders",
           newOrder
         );
       } catch (error) {

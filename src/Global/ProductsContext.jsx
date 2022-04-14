@@ -7,7 +7,9 @@ const ProductsContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const getProducts = async () => {
-      const result = await axios("http://localhost:1337/api/products");
+      const result = await axios(
+        "https://fashi-backend.herokuapp.com/api/products"
+      );
       setProducts(result.data.data);
     };
     getProducts();

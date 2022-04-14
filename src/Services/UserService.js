@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiEndPoint = "http://localhost:1337/api/users";
+const apiEndPoint = "https://fashi-backend.herokuapp.com/api/users";
 
 export function register(user) {
   return axios.post(apiEndPoint, {

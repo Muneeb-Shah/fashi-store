@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const apiEndPoint = "http://localhost:1337/api/auth/local";
+const apiEndPoint = "https://fashi-backend.herokuapp.com/api/auth/local";
 
 export async function login(user) {
   const { data } = await axios.post(apiEndPoint, {

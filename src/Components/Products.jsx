@@ -103,6 +103,7 @@ const Products = ({ handleAddCartClick }) => {
       </section>
     );
   }
+
   return (
     <section className="shop">
       <div className="container">
@@ -197,8 +198,9 @@ const Products = ({ handleAddCartClick }) => {
             <Fade left key={product.id}>
               <div className="item-card">
                 <img
-                  src={`http://localhost:1337${product.attributes.featureImage.data.attributes.url}`}
+                  src={`https://fashi-backend.herokuapp.com${product.attributes.featureImage.data.attributes.url}`}
                   className="product-img"
+                  alt="product image"
                 />
                 <div className="item-card__btns">
                   <button

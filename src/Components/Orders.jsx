@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const apiEndpoint = "http://localhost:1337/api";
+const apiEndpoint = "https://fashi-backend.herokuapp.com/api";
 
 const Orders = ({ currentUser }) => {
   const [orders, setOrders] = useState([]);
@@ -22,22 +22,18 @@ const Orders = ({ currentUser }) => {
         <div className="section-heading">
           <h2 className="section-heading__heading">My Orders</h2>
         </div>
-        <table className="orders-table">
-          <thead>
-            <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Placed On</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          {orders.length < 1 ? (
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">No Orders</th>
-              <th scope="col"></th>
-            </tr>
-          ) : (
+        {orders.length < 1 ? (
+          <div className="no-orders">No Orders</div>
+        ) : (
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Placed On</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id}>
@@ -55,8 +51,8 @@ const Orders = ({ currentUser }) => {
                 </tr>
               ))}
             </tbody>
-          )}
-        </table>
+          </table>
+        )}
       </div>
     </section>
   );
