@@ -15,7 +15,7 @@ const Orders = ({ currentUser }) => {
     };
     if (currentUser) getOrders();
   }, []);
-
+  console.log(orders[0]);
   return (
     <section id="orders" className="orders">
       <div className="container">
@@ -26,6 +26,7 @@ const Orders = ({ currentUser }) => {
           <thead>
             <tr>
               <th scope="col">Order ID</th>
+              <th scope="col">Placed On</th>
               <th scope="col">Amount</th>
               <th scope="col">Status</th>
             </tr>
@@ -39,8 +40,9 @@ const Orders = ({ currentUser }) => {
           ) : (
             <tbody>
               {orders.map((order) => (
-                <tr>
+                <tr key={order.id}>
                   <th scope="col">{order.id}</th>
+                  <th scope="col">{order.attributes.createdAt.slice(0, 9)}</th>
                   <th scope="col">
                     Rs.{order.attributes.order_details.order_amount}
                   </th>

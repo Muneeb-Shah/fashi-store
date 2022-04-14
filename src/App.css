@@ -969,6 +969,7 @@ p {
 
 .cart__item-details-left {
   width: 50%;
+  gap: 3rem;
 }
 
 .cart__item-details-right {
@@ -1126,6 +1127,10 @@ p {
   }
   .cart__item-qty-section {
     flex: none;
+  }
+  .cart-btns {
+    justify-content: center;
+    margin-top: 4rem;
   }
 }
 
@@ -1634,6 +1639,16 @@ p {
   background-color: #191919;
   font-size: 1.8rem;
 }
+
+#footer a {
+  transition: 250ms;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
 #footer .container {
   height: inherit;
   display: flex;

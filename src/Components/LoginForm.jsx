@@ -25,7 +25,9 @@ const LoginForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="form__heading">Login</h1>
+      <div class="section-heading">
+        <h2 class="section-heading__heading">Log In</h2>
+      </div>
       {error && <h2 className="error-message">{error}</h2>}
       <div>
         <label htmlFor="email">Email address</label>

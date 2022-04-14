@@ -1,5 +1,7 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
+import { getCurrentUser } from "./Services/AuthService";
+import { toast } from "react-toastify";
 import "./App.css";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
@@ -9,14 +11,11 @@ import RegisterForm from "./Components/RegisterForm";
 import LoginForm from "./Components/LoginForm";
 import Logout from "./Components/Logout";
 import Cart from "./Components/Cart";
-import { getCurrentUser } from "./Services/AuthService";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Blog from "./Components/Blog";
 import NotFound from "./Components/NotFound";
 import Contact from "./Components/Contact";
 import Orders from "./Components/Orders";
-import axios from "axios";
 
 function App() {
   const [currentUser] = useState(getCurrentUser());

@@ -24,7 +24,9 @@ const RegisterForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="form__heading">Register</h1>
+      <div class="section-heading">
+        <h2 class="section-heading__heading">Register</h2>
+      </div>
       {error && <h2 className="error-message">{error}</h2>}
       <div>
         <label htmlFor="username">Username</label>

@@ -155,7 +155,7 @@ const Products = ({ handleAddCartClick }) => {
                   ? `products-category-nav__item__selected`
                   : "products-category-nav__item"
               }
-              onClick={(e) => handleCategoryClick("Jeans")}
+              onClick={() => handleCategoryClick("Jeans")}
             >
               Jeans
             </li>
@@ -192,8 +192,8 @@ const Products = ({ handleAddCartClick }) => {
         )}
         <section className="product-page__products">
           {products.map((product) => (
-            <Fade left>
-              <div key={product.id} className="item-card">
+            <Fade left key={product.id}>
+              <div className="item-card">
                 <img
                   src={`http://localhost:1337${product.attributes.featureImage.data.attributes.url}`}
                   className="product-img"
