@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
-const apiEndpoint = "https://fashi-backend.herokuapp.com/";
+const apiEndpoint = "https://fashi-backend.herokuapp.com";
 
 const Cart = (props) => {
   const {
