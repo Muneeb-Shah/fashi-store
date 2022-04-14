@@ -1912,7 +1912,7 @@ input[type="submit"]:active {
 
 .orders {
   margin: 10rem auto;
-  height: 700px;
+  min-height: 300px;
 }
 
 .no-orders {
