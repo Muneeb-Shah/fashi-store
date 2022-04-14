@@ -31,18 +31,19 @@ const Cart = (props) => {
   const handleToken = async (token) => {
     const product = { name: "All Cart Products", price: totalPrice };
 
-    const response = await toast.promise(
-      axios.post("http://localhost:8080/checkout", {
-        product,
-        token,
-      }),
-      {
-        pending: "Please Wait",
-      },
-      { position: "top-center", theme: "dark" }
-    );
+    // const response = await toast.promise(
+    //   axios.post("http://localhost:8080/checkout", {
+    //     product,
+    //     token,
+    //   }),
+    //   {
+    //     pending: "Please Wait",
+    //   },
+    //   { position: "top-center", theme: "dark" }
+    // );
 
-    const status = response.data.status;
+    // const status = response.data.status;
+    const status = "success";
 
     if (status === "success") {
       handleClearCart();
@@ -76,22 +77,21 @@ const Cart = (props) => {
       } catch (error) {
         console.log(error);
       }
-
       props.history.push("/orders");
     }
 
-    if (status === "faliure") {
-      toast.error("Payment Failed!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
+    // if (status === "faliure") {
+    //   toast.error("Payment Failed!", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    //   });
+    // }
   };
 
   return (
