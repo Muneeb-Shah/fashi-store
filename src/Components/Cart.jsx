@@ -96,10 +96,10 @@ const Cart = (props) => {
 
   return (
     <div className="cart">
-      <div className="section-heading">
-        <h2 className="section-heading__heading">Cart</h2>
-      </div>
       <div className="container">
+        <div className="section-heading">
+          <h2 className="section-heading__heading">Cart</h2>
+        </div>
         <div className="cart__items">
           {productsInCart.length < 1 ? (
             <div className="cart__items-no-products">Your cart is empty</div>
@@ -116,9 +116,9 @@ const Cart = (props) => {
                       {product.attributes.name}
                     </div>
                   </div>
-                  <div className="cart__total">
+                  <div className="product-price">
                     <span className="cart__total__total-price">
-                      ${product.attributes.price}
+                      Rs.{product.attributes.price}
                     </span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const Cart = (props) => {
                 </div>
                 <div className="cart__item-details-right">
                   <span className="cart__item-price">
-                    ${product.attributes.price * product.qty}
+                    Rs.{product.attributes.price * product.qty}
                   </span>
 
                   <button
@@ -150,7 +150,7 @@ const Cart = (props) => {
         <div className="cart__total">
           <span>TOTAL:</span>
           <span className="cart__total__total-price total-price">
-            ${totalPrice}
+            Rs.{totalPrice}
           </span>
         </div>
         {productsInCart.length > 0 && (

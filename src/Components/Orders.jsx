@@ -42,9 +42,14 @@ const Orders = ({ currentUser }) => {
                 <tr>
                   <th scope="col">{order.id}</th>
                   <th scope="col">
-                    ${order.attributes.order_details.order_amount}
+                    Rs.{order.attributes.order_details.order_amount}
                   </th>
-                  <th scope="col">{order.attributes.status}</th>
+                  <th
+                    scope="col"
+                    className={`order_${order.attributes.status}`}
+                  >
+                    {order.attributes.status}
+                  </th>
                 </tr>
               ))}
             </tbody>

@@ -43,7 +43,7 @@ function App() {
     } else {
       setProductsInCart([...productsInCart, { ...product, qty: 1 }]);
     }
-    toast("Added", {
+    toast("Added to Cart", {
       position: "top-center",
       autoClose: 500,
       hideProgressBar: true,

@@ -19,7 +19,10 @@ const Header = ({ currentUser, productsInCart }) => {
               </span>
             </div>
             <div className="header__top__contact__phone">
-              <i className="fa fa-phone"></i>
+              <i
+                style={{ transform: "rotate(90deg)" }}
+                className="fa fa-phone"
+              ></i>
               <span>+65 11 188 8888</span>
             </div>
           </div>

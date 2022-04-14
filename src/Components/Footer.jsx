@@ -18,13 +18,13 @@ const Footer = () => {
             <li>
               <ul class="footer__social-icons">
                 <li>
-                  <i class="fa fa-envelope"></i>
+                  <i class="fa fa-map-marker"></i>
                 </li>
                 <li>
-                  <i class="fa fa-envelope"></i>
-                </li>
-                <li>
-                  <i class="fa fa-envelope"></i>
+                  <i
+                    style={{ transform: "rotate(90deg)" }}
+                    class="fa fa-phone"
+                  ></i>
                 </li>
                 <li>
                   <i class="fa fa-envelope"></i>
