@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Fade from "react-reveal/Fade";
 import Bounce from "react-reveal/Bounce";
 
-const apiEndpoint = "http://localhost:1337/api";
+const apiEndpoint = "https://fashi-backend.herokuapp.com/api";
 
 const Products = ({ handleAddCartClick }) => {
   const [products, setProducts] = useState([]);
@@ -92,13 +92,15 @@ const Products = ({ handleAddCartClick }) => {
     products.length === 0
   ) {
     return (
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={true}
-      >
-        <CircularProgress color="inherit" />
-        <div className="loader-text">LOADING PRODUCTS</div>
-      </Backdrop>
+      <section className="shop">
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress color="inherit" />
+          <div className="loader-text">LOADING PRODUCTS</div>
+        </Backdrop>
+      </section>
     );
   }
   return (
