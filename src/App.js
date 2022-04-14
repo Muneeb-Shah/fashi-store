@@ -17,6 +17,8 @@ import NotFound from "./Components/NotFound";
 import Contact from "./Components/Contact";
 import Orders from "./Components/Orders";
 
+localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+
 function App() {
   const [currentUser] = useState(getCurrentUser());
   const [productsInCart, setProductsInCart] = useState([]);
