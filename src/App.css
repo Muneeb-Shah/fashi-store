@@ -1935,6 +1935,16 @@ input[type="submit"]:active {
   border: 1px solid lightgrey;
 }
 
+.order-row_pending {
+  background: #ffff0052;
+}
+.order-row_completed {
+  background: #00800038;
+}
+.order-row_cancelled {
+  background: #ff00003b;
+}
+
 .order_pending {
   color: var(--color-primary);
 }

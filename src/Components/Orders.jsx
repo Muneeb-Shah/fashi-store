@@ -68,7 +68,10 @@ const Orders = ({ currentUser }) => {
               {orders.map((order) => {
                 getDate(order.attributes.createdAt);
                 return (
-                  <tr key={order.id}>
+                  <tr
+                    key={order.id}
+                    className={`order-row_${order.attributes.status}`}
+                  >
                     <th scope="col">{order.id}</th>
                     <th scope="col">{dateToRender}</th>
                     <th scope="col">
