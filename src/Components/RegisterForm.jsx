@@ -14,11 +14,12 @@ const RegisterForm = (props) => {
     try {
       await register(user);
       setError("");
-      window.location = "/";
+      window.location = "/login";
     } catch (ex) {
       console.log(ex.response);
       if (ex.response && ex.response.status === 400)
-        setError(ex.response.data.error.message);
+        if ((ex.response.data.error.message = "This attribute must be unique"))
+          setError("User already exists");
     }
   };
 

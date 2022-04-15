@@ -92,52 +92,53 @@ function App() {
   return (
     <>
       <Header currentUser={currentUser} productsInCart={productsInCart} />
-      <Switch>
-        <Route exact path="/register" component={RegisterForm} />
-        <Route exact path="/login" component={LoginForm} />
-        <Route exact path="/logout" component={Logout} />
-        <Route exact path="/contact" component={Contact} />
-        <Route exact path="/blog" component={Blog} />
-        <Route
-          exact
-          path="/orders"
-          render={(props) => {
-            if (!currentUser)
-              return (
-                <Redirect
-                  to={{ pathname: "/login", state: { from: props.location } }}
-                />
-              );
-            else return <Orders currentUser={currentUser} {...props} />;
-          }}
-        />
-        <Route
-          exact
-          path="/cart"
-          render={(props) => (
-            <Cart
-              {...props}
-              productsInCart={productsInCart}
-              handleProductIncrement={handleProductIncrement}
-              handleProductDecrement={handleProductDecrement}
-              handleProductRemove={handleProductRemove}
-              handleClearCart={handleClearCart}
-              currentUser={currentUser}
-            />
-          )}
-        />
-
-        <Route
-          exact
-          path="/products"
-          render={(props) => (
-            <Products handleAddCartClick={handleAddCartClick} {...props} />
-          )}
-        />
-        <Route exact path="/not-found" component={NotFound} />
-        <Route exact path="/" component={Main} />
-        <Redirect to="not-found" />
-      </Switch>
+      <div class="main">
+        <Switch>
+          <Route exact path="/register" component={RegisterForm} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/contact" component={Contact} />
+          <Route exact path="/blog" component={Blog} />
+          <Route
+            exact
+            path="/orders"
+            render={(props) => {
+              if (!currentUser)
+                return (
+                  <Redirect
+                    to={{ pathname: "/login", state: { from: props.location } }}
+                  />
+                );
+              else return <Orders currentUser={currentUser} {...props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/cart"
+            render={(props) => (
+              <Cart
+                {...props}
+                productsInCart={productsInCart}
+                handleProductIncrement={handleProductIncrement}
+                handleProductDecrement={handleProductDecrement}
+                handleProductRemove={handleProductRemove}
+                handleClearCart={handleClearCart}
+                currentUser={currentUser}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/products"
+            render={(props) => (
+              <Products handleAddCartClick={handleAddCartClick} {...props} />
+            )}
+          />
+          <Route exact path="/not-found" component={NotFound} />
+          <Route exact path="/" component={Main} />
+          <Redirect to="not-found" />
+        </Switch>
+      </div>
       <Footer />
     </>
   );

@@ -38,6 +38,14 @@ const Orders = ({ currentUser }) => {
     );
   }
 
+  let dateToRender = "";
+
+  const getDate = (date) => {
+    const newDate = new Date(date);
+    const dateString = newDate.toGMTString().slice(-0, -12);
+    dateToRender = dateString;
+  };
+
   return (
     <section id="orders" className="orders">
       <div className="container">
@@ -57,21 +65,24 @@ const Orders = ({ currentUser }) => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
-                <tr key={order.id}>
-                  <th scope="col">{order.id}</th>
-                  <th scope="col">{order.attributes.createdAt.slice(0, 9)}</th>
-                  <th scope="col">
-                    Rs.{order.attributes.order_details.order_amount}
-                  </th>
-                  <th
-                    scope="col"
-                    className={`order_${order.attributes.status}`}
-                  >
-                    {order.attributes.status}
-                  </th>
-                </tr>
-              ))}
+              {orders.map((order) => {
+                getDate(order.attributes.createdAt);
+                return (
+                  <tr key={order.id}>
+                    <th scope="col">{order.id}</th>
+                    <th scope="col">{dateToRender}</th>
+                    <th scope="col">
+                      Rs.{order.attributes.order_details.order_amount}
+                    </th>
+                    <th
+                      scope="col"
+                      className={`order_${order.attributes.status}`}
+                    >
+                      {order.attributes.status}
+                    </th>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
