@@ -17,14 +17,13 @@ import NotFound from "./Components/NotFound";
 import Contact from "./Components/Contact";
 import Orders from "./Components/Orders";
 
-localStorage.setItem("productsInCart", JSON.stringify([]));
-
 function App() {
   const [currentUser] = useState(getCurrentUser());
   const [productsInCart, setProductsInCart] = useState([]);
 
   useEffect(() => {
-    setProductsInCart(JSON.parse(localStorage.getItem("productsInCart")));
+    const productsInLS = JSON.parse(localStorage.getItem("productsInCart"));
+    if (productsInLS) setProductsInCart(productsInLS);
   }, []);
 
   useEffect(() => {

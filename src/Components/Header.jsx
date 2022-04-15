@@ -82,7 +82,7 @@ const Header = ({ currentUser, productsInCart }) => {
             <Link className="notification-btn" to="/cart">
               <i className="fa fa-cart-plus"></i>
               <span className="notification-btn__badge">
-                {productsInCart.length}
+                {productsInCart ? productsInCart.length : 0}
               </span>
             </Link>
           </div>
