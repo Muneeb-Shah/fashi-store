@@ -1,9 +1,15 @@
 import { useState, useEffect, useContext, Fragment } from "react";
+import { useQuery, gql } from "@apollo/client";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Fade from "react-reveal/Fade";
 import Bounce from "react-reveal/Bounce";
+import {
+  GET_PRODUCT_BY_ID,
+  GET_ALL_PRODUCTS,
+  GET_ALL_CATEGORIES,
+} from "../graphql/queries";
 
 const apiEndpoint = "https://fashi-backend.herokuapp.com/api";
 
@@ -14,18 +20,41 @@ const Products = ({ handleAddCartClick }) => {
   const [selectedGender, setSelectedGender] = useState("all");
   const [noProducts, setNoProducts] = useState(false);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const result = await axios(`${apiEndpoint}/products?populate=*`);
-      setProducts(result.data.data);
-    };
-    getProducts();
+  // const { data, error, loading } = useQuery(GET_PRODUCT_BY_ID, {
+  //   variables: { id: "4" },
+  // });
 
-    const getCategories = async () => {
-      const result = await axios(`${apiEndpoint}/categories`);
-      setCategories(result.data.data);
-    };
-    getCategories();
+  const {
+    data: allProducts,
+    error: allProductsError,
+    loading: allProductsErrorLoading,
+  } = useQuery(GET_ALL_PRODUCTS);
+
+  const {
+    data: allCategories,
+    error: allCategoriesError,
+    loading: allCategoriesLoading,
+  } = useQuery(GET_ALL_CATEGORIES);
+
+  useEffect(() => {
+    // AXIOS
+    // const getProducts = async () => {
+    //   const result = await axios(`${apiEndpoint}/products?populate=*`);
+    //   setProducts(result.data.data);
+    // };
+    // getProducts();
+
+    setProducts(allProducts.products.data);
+
+    // AXIOS
+    // const getCategories = async () => {
+    //   const result = await axios(`${apiEndpoint}/categories`);
+    //   setCategories(result.data.data);
+    // };
+
+    // getCategories();
+
+    setCategories(allCategories.categories.data);
   }, []);
 
   const handleGenderClick = async (gender) => {
