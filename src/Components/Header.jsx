@@ -103,10 +103,10 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/blog">BLOG</Link>
                 </li>
                 <li>
-                  <Link to="/contact">CONTACT</Link>
+                  <Link to="/orders">MY ORDERS</Link>
                 </li>
                 <li>
-                  <Link to="/orders">MY ORDERS</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </li>
               </ul>
             </nav>
@@ -136,10 +136,10 @@ const Header = ({ currentUser, productsInCart }) => {
                   <Link to="/blog">BLOG</Link>
                 </li>
                 <li>
-                  <Link to="/contact">CONTACT</Link>
+                  <Link to="/orders">MY ORDERS</Link>
                 </li>
                 <li>
-                  <Link to="/orders">MY ORDERS</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </li>
               </ul>
             </nav>
