@@ -7,8 +7,8 @@ import reportWebVitals from "./reportWebVitals";
 import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 
 const client = new ApolloClient({
-  // uri: "https://fashi-backend.herokuapp.com/graphql",
-  uri: "http://localhost:1337/graphql",
+  uri: "https://fashi-backend.herokuapp.com/graphql",
+  // uri: "http://localhost:1337/graphql",
   cache: new InMemoryCache(),
 });
 

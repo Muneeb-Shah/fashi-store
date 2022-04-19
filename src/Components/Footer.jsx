@@ -37,16 +37,16 @@ const Footer = () => {
               <ul>
                 <li class="footer__nav__heading">Information</li>
                 <li>
-                  <a href="">About Us</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="">Checkout</a>
+                  <Link to="/products">Products</Link>
                 </li>
                 <li>
-                  <a href="">Contact</a>
+                  <Link to="/blog">Blog</Link>
                 </li>
                 <li>
-                  <a href="">Servicer</a>
+                  <Link to="/contact">Contact</Link>
                 </li>
               </ul>
             </li>
@@ -54,16 +54,10 @@ const Footer = () => {
               <ul>
                 <li class="footer__nav__heading">My Account</li>
                 <li>
-                  <a href="">My Account</a>
+                  <Link to="/orders">My Orders</Link>
                 </li>
                 <li>
-                  <a href="">Contact</a>
-                </li>
-                <li>
-                  <a href="">Shopping Cart</a>
-                </li>
-                <li>
-                  <a href="">Shop</a>
+                  <Link to="/cart">Shopping Cart</Link>
                 </li>
               </ul>
             </li>
