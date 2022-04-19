@@ -1,7 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { CREATE_ORDER } from "../graphql/mutation";
 import { Link } from "react-router-dom";
-import { getCurrentUser, getUserOrders } from "../Services/AuthService";
 import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +19,11 @@ const Cart = (props) => {
     currentUser,
   } = props;
 
+  const [createOrder] = useMutation(CREATE_ORDER, {
+    onCompleted: (res) => console.log(res),
+    onError: (error) => console.log(error),
+  });
+
   let totalPrice = 0;
   if (productsInCart) {
     productsInCart.forEach(
@@ -29,7 +33,7 @@ const Cart = (props) => {
   }
 
   const handleToken = async (token) => {
-    const product = { name: "All Cart Products", price: totalPrice };
+    // const product = { name: "All Cart Products", price: totalPrice };
 
     // const response = await toast.promise(
     //   axios.post("http://localhost:8080/checkout", {
@@ -58,26 +62,38 @@ const Cart = (props) => {
         progress: undefined,
       });
 
-      const newOrder = {
-        data: {
+      createOrder({
+        variables: {
+          user: currentUser.id,
           status: "pending",
+          publishedAt: new Date(),
           order_details: {
             order_amount: totalPrice,
             order_products: productsInCart,
           },
-          user: currentUser.id,
         },
-      };
-
-      try {
-        const response = await axios.post(
-          "https://fashi-backend.herokuapp.com/api/orders",
-          newOrder
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      });
       props.history.push("/orders");
+
+      // const newOrder = {
+      //   data: {
+      //     status: "pending",
+      //     order_details: {
+      //       order_amount: totalPrice,
+      //       order_products: productsInCart,
+      //     },
+      //     user: currentUser.id,
+      //   },
+      // };
+
+      // try {
+      //   const response = await axios.post(
+      //     "https://fashi-backend.herokuapp.com/api/orders",
+      //     newOrder
+      //   );
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
 
     // if (status === "faliure") {

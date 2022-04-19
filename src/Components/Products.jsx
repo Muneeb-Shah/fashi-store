@@ -1,123 +1,46 @@
-import { useState, useEffect, useContext, Fragment } from "react";
-import { useQuery, gql } from "@apollo/client";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Fade from "react-reveal/Fade";
 import Bounce from "react-reveal/Bounce";
-import {
-  GET_PRODUCT_BY_ID,
-  GET_ALL_PRODUCTS,
-  GET_ALL_CATEGORIES,
-} from "../graphql/queries";
-
-const apiEndpoint = "https://fashi-backend.herokuapp.com/api";
+import { GET_ALL_PRODUCTS } from "../graphql/queries";
 
 const Products = ({ handleAddCartClick }) => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedGender, setSelectedGender] = useState("all");
-  const [noProducts, setNoProducts] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
 
-  // const { data, error, loading } = useQuery(GET_PRODUCT_BY_ID, {
-  //   variables: { id: "4" },
-  // });
-
-  const {
-    data: allProducts,
-    error: allProductsError,
-    loading: allProductsErrorLoading,
-  } = useQuery(GET_ALL_PRODUCTS);
-
-  const {
-    data: allCategories,
-    error: allCategoriesError,
-    loading: allCategoriesLoading,
-  } = useQuery(GET_ALL_CATEGORIES);
+  const [getAllproducts] = useLazyQuery(GET_ALL_PRODUCTS, {
+    onCompleted: (res) => {
+      setProducts(res?.products?.data);
+    },
+    onError: (error) => {
+      console.log("ERROR=", error);
+    },
+  });
 
   useEffect(() => {
-    // AXIOS
-    // const getProducts = async () => {
-    //   const result = await axios(`${apiEndpoint}/products?populate=*`);
-    //   setProducts(result.data.data);
-    // };
-    // getProducts();
+    getAllproducts({
+      variables: {
+        gender: selectedGender || undefined,
+        category: selectedCategory || undefined,
+      },
+    });
+  }, [selectedCategory, selectedGender]);
 
-    setProducts(allProducts.products.data);
-
-    // AXIOS
-    // const getCategories = async () => {
-    //   const result = await axios(`${apiEndpoint}/categories`);
-    //   setCategories(result.data.data);
-    // };
-
-    // getCategories();
-
-    setCategories(allCategories.categories.data);
-  }, []);
-
-  const handleGenderClick = async (gender) => {
+  const handleGenderClick = (gender) => {
     setSelectedGender(gender);
-    setSelectedCategory("All");
-
-    if (gender === "all") {
-      const result = await axios(`${apiEndpoint}/products?populate=*`);
-      if (result.data.data.length === 0) setNoProducts(true);
-      else if (result.data.data.length > 1) setNoProducts(false);
-      setProducts(result.data.data);
-    }
-    if (gender === "women") {
-      const result = await axios(
-        `${apiEndpoint}/products?filters[gender][name][$eq]=women&populate=*`
-      );
-      if (result.data.data.length === 0) setNoProducts(true);
-      else if (result.data.data.length > 1) setNoProducts(false);
-      setProducts(result.data.data);
-    }
-    if (gender === "men") {
-      const result = await axios(
-        `${apiEndpoint}/products?filters[gender][name][$eq]=men&populate=*`
-      );
-      if (result.data.data.length === 0) setNoProducts(true);
-      else if (result.data.data.length > 1) setNoProducts(false);
-      setProducts(result.data.data);
-    }
+    setSelectedCategory("");
   };
 
-  const handleCategoryClick = async (category) => {
+  const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    if (selectedGender === "all") {
-      let result;
-      if (category === "All")
-        result = await axios(`${apiEndpoint}/products?populate=*`);
-      else
-        result = await axios(
-          `${apiEndpoint}/products?filters[categories][name][$eq]=${category}&populate=*`
-        );
-
-      if (result.data.data.length === 0) setNoProducts(true);
-      else if (result.data.data.length > 1) setNoProducts(false);
-
-      setProducts(result.data.data);
-    } else {
-      let result;
-      if (category === "All")
-        result = await axios(
-          `${apiEndpoint}/products?filters[gender][name][$eq]=${selectedGender}&populate=*`
-        );
-      else
-        result = await axios(
-          `${apiEndpoint}/products?filters[gender][name][$eq]=${selectedGender}&filters[categories][name][$eq]=${category}&populate=*`
-        );
-      if (result.data.data.length === 0) setNoProducts(true);
-      else if (result.data.data.length > 1) setNoProducts(false);
-      setProducts(result.data.data);
-    }
   };
-  while (
-    selectedGender === "all" &&
-    selectedCategory === "All" &&
+
+  if (
+    selectedGender === "" &&
+    selectedCategory === "" &&
     products.length === 0
   ) {
     return (
@@ -136,18 +59,16 @@ const Products = ({ handleAddCartClick }) => {
   return (
     <section className="shop">
       <div className="container">
-        <div className="section-heading">
-          <h2 className="section-heading__heading">Shop</h2>
-        </div>
+        <h2 className="section-heading__heading">Shop</h2>
         <section className="banner">
           <Fade left>
             <div className="banner-content">
               <div
                 className="banner-content__kids banner-content__item banner-content__item__clickable"
-                onClick={() => handleGenderClick(`all`)}
+                onClick={() => handleGenderClick(``)}
               >
                 <div className="outline"></div>
-                {selectedGender === "all" && <div className="outlined"></div>}
+                {selectedGender === "" && <div className="outlined"></div>}
                 <p className="banner-content__desc">All</p>
               </div>
               <div
@@ -173,11 +94,11 @@ const Products = ({ handleAddCartClick }) => {
           <ul className="products-category-nav">
             <li
               className={
-                selectedCategory === "All"
+                selectedCategory === ""
                   ? `products-category-nav__item__selected`
                   : "products-category-nav__item"
               }
-              onClick={() => handleCategoryClick("All")}
+              onClick={() => handleCategoryClick("")}
             >
               All
             </li>
@@ -213,7 +134,7 @@ const Products = ({ handleAddCartClick }) => {
             </li>
           </ul>
         </Bounce>
-        {noProducts && (
+        {products.length === 0 && (
           <Fade right>
             <div className="container">
               <div className="no-products">

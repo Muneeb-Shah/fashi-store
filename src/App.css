@@ -440,6 +440,7 @@ p {
 .products-category-nav__item__selected {
   color: var(--color-headings);
   border-bottom: 2px solid var(--color-body);
+  cursor: pointer;
 }
 
 .item-slider__items {

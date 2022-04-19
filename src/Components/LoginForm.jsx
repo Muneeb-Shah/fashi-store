@@ -1,26 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../graphql/mutation";
 import { Link } from "react-router-dom";
-import { login } from "../Services/AuthService";
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const user = { identifier: email, password: password };
-    try {
-      await login(user);
-      setError("");
+  const [doLlogin] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      document.cookie = `token=${data.login.jwt}`;
       const { state } = props.location;
       window.location = state ? state.from.pathname : "/";
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        if (ex.response.data.error.message === "Invalid identifier or password")
-          setError("Invalid email or password");
+    },
+    onError: (error) => {
+      if (error?.message === "Internal Server Error") {
+        setError("Invalid email or password");
       }
-    }
+    },
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const user = { identifier: email, password: password };
+
+    doLlogin({
+      variables: { username: user.identifier, password: user.password },
+    });
   };
 
   return (

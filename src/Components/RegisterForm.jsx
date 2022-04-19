@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { REGISTER } from "../graphql/mutation";
 import Link from "react-router-dom/Link";
-import { register } from "../Services/UserService";
 
 const RegisterForm = (props) => {
   const [username, setUsername] = useState("");
@@ -8,19 +9,38 @@ const RegisterForm = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [doRegister] = useMutation(REGISTER, {
+    onCompleted: () => {
+      window.location = "/login";
+    },
+    onError: (error) => {
+      if ((error.message = "Internal Server Error"))
+        setError("User already exists");
+    },
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = { username: username, email: email, password: password };
-    try {
-      await register(user);
-      setError("");
-      window.location = "/login";
-    } catch (ex) {
-      console.log(ex.response);
-      if (ex.response && ex.response.status === 400)
-        if ((ex.response.data.error.message = "This attribute must be unique"))
-          setError("User already exists");
-    }
+    const user = { username, email: email, password: password };
+
+    doRegister({
+      variables: {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      },
+    });
+
+    // try {
+    //   await register(user);
+    //   setError("");
+    //   window.location = "/login";
+    // } catch (ex) {
+    //   console.log(ex.response);
+    //   if (ex.response && ex.response.status === 400)
+    //     if ((ex.response.data.error.message = "This attribute must be unique"))
+    //       setError("User already exists");
+    // }
   };
 
   return (

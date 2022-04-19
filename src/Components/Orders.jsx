@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useLazyQuery } from "@apollo/client";
+import { GET_USER_ORDERS } from "../graphql/queries";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const apiEndpoint = "https://fashi-backend.herokuapp.com/api";
 
 const Orders = ({ currentUser }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [getUserOrders] = useLazyQuery(GET_USER_ORDERS, {
+    onCompleted: (res) => {
+      setLoading(false);
+      setOrders(res?.orders?.data);
+    },
+    onError: (error) => {
+      console.log(`ERROR: ${error}`);
+    },
+  });
+
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const result = await axios(
-          `${apiEndpoint}/orders?filters[user][id][$eq]=${currentUser.id}&populate=*`
-        );
-        if (result.data) setLoading(false);
-        setOrders(result.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (currentUser) getOrders();
-  }, []);
+    getUserOrders({ variables: { currentUserId: currentUser.id } });
+  }, [orders]);
 
   while (loading) {
     return (

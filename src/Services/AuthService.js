@@ -1,16 +1,16 @@
-import axios from "axios";
+// import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const apiEndPoint = "https://fashi-backend.herokuapp.com/api/auth/local";
+// const apiEndPoint = "https://fashi-backend.herokuapp.com/api/auth/local";
 
-export async function login(user) {
-  const { data } = await axios.post(apiEndPoint, {
-    identifier: user.identifier,
-    password: user.password,
-  });
-  console.log(data);
-  document.cookie = `token=${data.jwt}`;
-}
+// export async function login(user) {
+//   const { data } = await axios.post(apiEndPoint, {
+//     identifier: user.identifier,
+//     password: user.password,
+//   });
+
+//   document.cookie = `token=${data.jwt}`;
+// }
 
 export function getCurrentUser() {
   function getCookie(name) {

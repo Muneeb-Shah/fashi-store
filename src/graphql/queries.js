@@ -1,22 +1,15 @@
 import { gql } from "@apollo/client";
 
-export const GET_PRODUCT_BY_ID = gql`
-  query product($id: ID) {
-    product(id: $id) {
+export const GET_ALL_PRODUCTS = gql`
+  query products($gender: String, $category: String) {
+    products(
+      filters: {
+        gender: { name: { eq: $gender } }
+        categories: { name: { eq: $category } }
+      }
+    ) {
       data {
         id
-        attributes {
-          name
-        }
-      }
-    }
-  }
-`;
-
-export const GET_ALL_PRODUCTS = gql`
-  query {
-    products {
-      data {
         attributes {
           name
           price
@@ -33,12 +26,15 @@ export const GET_ALL_PRODUCTS = gql`
   }
 `;
 
-export const GET_ALL_CATEGORIES = gql`
-  query {
-    categories {
+export const GET_USER_ORDERS = gql`
+  query ($currentUserId: ID) {
+    orders(filters: { user: { id: { eq: $currentUserId } } }) {
       data {
+        id
         attributes {
-          name
+          status
+          createdAt
+          order_details
         }
       }
     }
