@@ -91,7 +91,7 @@ const Cart = (props) => {
       //     "https://fashi-backend.herokuapp.com/api/orders",
       //     newOrder
       //   );
-      // } catch (error) {
+      // } catch (error) {graphql
       //   console.log(error);
       // }
     }
@@ -186,6 +186,7 @@ const Cart = (props) => {
                   shippingAddress
                   amount={totalPrice * 100}
                   name="All Cart Products"
+                  currency="PKR"
                 ></StripeCheckout>
               ) : (
                 <Link
