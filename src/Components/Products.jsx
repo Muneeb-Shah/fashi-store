@@ -59,7 +59,9 @@ const Products = ({ handleAddCartClick }) => {
   return (
     <section className="shop">
       <div className="container">
-        <h2 className="section-heading__heading">Shop</h2>
+        <div className="section-heading">
+          <h2 className="section-heading__heading">Shop</h2>
+        </div>
         <section className="banner">
           <Fade left>
             <div className="banner-content">
