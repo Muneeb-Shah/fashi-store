@@ -325,6 +325,12 @@ p {
   padding: 1.5rem;
   color: #fff;
 }
+@media screen and (max-width: 768px) {
+  .search-input input {
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+}
 
 /* NOTIFICATION-BTN */
 .notification-btn {
